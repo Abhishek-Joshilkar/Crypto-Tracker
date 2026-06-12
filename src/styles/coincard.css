@@ -1,0 +1,11 @@
+.coin-card{
+  background:#1e293b;
+  padding:20px;
+  border-radius:10px;
+  color:white;
+  text-align:center;
+}
+
+.coin-card img{
+  width:60px;
+}
