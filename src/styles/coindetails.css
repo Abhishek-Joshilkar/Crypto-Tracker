@@ -1,0 +1,17 @@
+.coin-details{
+  max-width:800px;
+  margin:auto;
+  padding:40px;
+  color:white;
+  text-align:center;
+}
+
+.coin-details img{
+  width:120px;
+  margin-bottom:20px;
+}
+
+.coin-details p{
+  margin:10px 0;
+  font-size:18px;
+}
