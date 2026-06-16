@@ -1,11 +1,20 @@
 import "../styles/marketstats.css";
+import { motion } from "framer-motion";
 
 function MarketStats({ stats }) {
   if (!stats) return null;
 
   return (
-    <section className="market-stats">
 
+    <section className="market-stats">
+      <motion.section
+        className="market-stats"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.6 }}
+      >
+        {/* Cards */}
+      </motion.section>
       <div className="stat-card">
         <h3>Market Cap</h3>
         <p>
