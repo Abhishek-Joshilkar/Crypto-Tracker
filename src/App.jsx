@@ -1,8 +1,9 @@
 import { Routes, Route } from "react-router-dom";
 
 import Home from "./pages/Home";
-import Dashboard from "./pages/Dashboard";
+import Dashboard from "./pages/DashBoard";
 import CoinDetails from "./pages/CoinDetails";
+import Watchlist from "./pages/Watchlist";
 
 function App() {
   return (
@@ -13,6 +14,10 @@ function App() {
       />
 
       <Route
+        path="/watchlist"
+        element={<Watchlist />}
+      />
+      <Route
         path="/dashboard"
         element={<Dashboard />}
       />
@@ -22,6 +27,7 @@ function App() {
         element={<CoinDetails />}
       />
     </Routes>
+
   );
 }
 

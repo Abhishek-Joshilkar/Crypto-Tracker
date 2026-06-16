@@ -1,0 +1,67 @@
+.watchlist-page {
+  min-height: 100vh;
+
+  padding: 120px 40px;
+
+  color: white;
+}
+
+.watchlist-header {
+  text-align: center;
+
+  margin-bottom: 50px;
+}
+
+.watchlist-header h1 {
+  font-size: 3rem;
+
+  margin-bottom: 10px;
+}
+
+.watchlist-header p {
+  color: #94a3b8;
+
+  font-size: 1.1rem;
+}
+
+.empty-watchlist {
+  width: 100%;
+  max-width: 500px;
+
+  margin: 80px auto;
+
+  text-align: center;
+
+  padding: 50px;
+
+  border-radius: 20px;
+
+  background: rgba(30, 41, 59, 0.45);
+
+  backdrop-filter: blur(16px);
+
+  border: 1px solid rgba(
+    255,
+    255,
+    255,
+    0.08
+  );
+}
+
+.empty-watchlist h2 {
+  margin-bottom: 10px;
+}
+
+.empty-watchlist p {
+  color: #94a3b8;
+}
+
+@media (max-width: 768px) {
+  .watchlist-page {
+    padding: 100px 20px;
+  }
+
+  .watchlist-header h1 {
+    font-size: 2.2rem;
+  }
+}

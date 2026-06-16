@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 
+import Navbar from "../components/Navbar";
+
 import SearchBar from "../components/SearchBar";
 import CoinList from "../components/CoinList";
 import MarketStats from "../components/MarketStats";
@@ -10,10 +12,17 @@ import {
   getGlobalStats,
 } from "../services/cryptoApi";
 
+import "../styles/dashboard.css";
+
 function Dashboard() {
-  const [coins, setCoins] = useState([]);
-  const [stats, setStats] = useState(null);
-  const [search, setSearch] = useState("");
+  const [coins, setCoins] =
+    useState([]);
+
+  const [stats, setStats] =
+    useState(null);
+
+  const [search, setSearch] =
+    useState("");
 
   useEffect(() => {
     fetchData();
@@ -34,24 +43,49 @@ function Dashboard() {
     }
   };
 
-  const filteredCoins = coins.filter((coin) =>
-    coin.name
-      .toLowerCase()
-      .includes(search.toLowerCase())
-  );
+  const filteredCoins =
+    coins.filter((coin) =>
+      coin.name
+        .toLowerCase()
+        .includes(
+          search.toLowerCase()
+        )
+    );
 
   return (
     <>
-      <SearchBar
-        search={search}
-        setSearch={setSearch}
-      />
+      <Navbar />
 
-      <MarketStats stats={stats} />
+      <div className="dashboard">
 
-      <TopMovers coins={filteredCoins} />
+        <div className="dashboard-header">
+          <h1>
+            Crypto Market Dashboard
+          </h1>
 
-      <CoinList coins={filteredCoins} />
+          <p>
+            Track live cryptocurrency
+            prices, market trends and
+            analytics in real time.
+          </p>
+        </div>
+
+        <SearchBar
+          search={search}
+          setSearch={setSearch}
+        />
+
+        <MarketStats stats={stats} />
+
+        <TopMovers
+          coins={filteredCoins}
+        />
+
+        <CoinList
+          coins={filteredCoins}
+        />
+
+      </div>
     </>
   );
 }

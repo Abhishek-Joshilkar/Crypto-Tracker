@@ -1,6 +1,10 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 
+import {
+  useWatchlist,
+} from "../context/WatchlistContext";
+
 import "../styles/coincard.css";
 
 const cardVariants = {
@@ -8,6 +12,7 @@ const cardVariants = {
     opacity: 0,
     y: 20,
   },
+
   show: {
     opacity: 1,
     y: 0,
@@ -15,6 +20,17 @@ const cardVariants = {
 };
 
 function CoinCard({ coin }) {
+  const {
+    watchlist,
+    addToWatchlist,
+    removeFromWatchlist,
+  } = useWatchlist();
+
+  const isSaved =
+    watchlist.find(
+      (item) => item.id === coin.id
+    );
+
   return (
     <motion.div
       className="coin-card"
@@ -27,6 +43,19 @@ function CoinCard({ coin }) {
         duration: 0.3,
       }}
     >
+      <button
+        className="watch-btn"
+        onClick={() =>
+          isSaved
+            ? removeFromWatchlist(
+                coin.id
+              )
+            : addToWatchlist(coin)
+        }
+      >
+        {isSaved ? "★" : "☆"}
+      </button>
+
       <Link to={`/coin/${coin.id}`}>
         <img
           src={coin.image}

@@ -1,0 +1,45 @@
+.dashboard {
+  min-height: 100vh;
+
+  /* padding: 40px 40px 80px; */
+padding-top: 120px;
+  color: white;
+}
+
+.dashboard-header {
+  text-align: center;
+
+  margin: 40px 0 50px;
+}
+
+.dashboard-header h1 {
+  font-size: 3rem;
+
+  margin-bottom: 15px;
+}
+
+.dashboard-header p {
+  color: #94a3b8;
+
+  font-size: 1.1rem;
+
+  max-width: 700px;
+
+  margin: auto;
+
+  line-height: 1.8;
+}
+
+@media (max-width: 768px) {
+  .dashboard {
+    padding: 20px;
+  }
+
+  .dashboard-header h1 {
+    font-size: 2.2rem;
+  }
+
+  .dashboard-header p {
+    font-size: 1rem;
+  }
+}

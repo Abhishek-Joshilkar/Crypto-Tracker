@@ -1,14 +1,23 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import { BrowserRouter } from "react-router-dom";
-
 import App from "./App";
+
+import {
+  BrowserRouter,
+} from "react-router-dom";
+
+import {
+  WatchlistProvider,
+} from "./context/WatchlistContext";
+
 import "./index.css";
 
 ReactDOM.createRoot(
   document.getElementById("root")
 ).render(
   <BrowserRouter>
-    <App />
+    <WatchlistProvider>
+      <App />
+    </WatchlistProvider>
   </BrowserRouter>
 );
