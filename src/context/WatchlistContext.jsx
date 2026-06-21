@@ -5,30 +5,33 @@ import {
   useState,
 } from "react";
 
-const WatchlistContext =
-  createContext();
+import { useAuth } from "./AuthContext";
 
-export function WatchlistProvider({
-  children,
-}) {
-  const [watchlist, setWatchlist] =
-    useState(() => {
-      const saved =
-        localStorage.getItem(
-          "watchlist"
-        );
+const WatchlistContext = createContext();
 
-      return saved
-        ? JSON.parse(saved)
-        : [];
-    });
+const getStorageKey = (userId) =>
+  userId ? `watchlist_${userId}` : "watchlist_guest";
+
+export function WatchlistProvider({ children }) {
+  const { user } = useAuth();
+  const userId = user?.id ?? null;
+
+  const [watchlist, setWatchlist] = useState([]);
+
+  useEffect(() => {
+    const saved = localStorage.getItem(
+      getStorageKey(userId)
+    );
+
+    setWatchlist(saved ? JSON.parse(saved) : []);
+  }, [userId]);
 
   useEffect(() => {
     localStorage.setItem(
-      "watchlist",
+      getStorageKey(userId),
       JSON.stringify(watchlist)
     );
-  }, [watchlist]);
+  }, [watchlist, userId]);
 
   const addToWatchlist = (coin) => {
     const exists = watchlist.find(
@@ -36,20 +39,13 @@ export function WatchlistProvider({
     );
 
     if (!exists) {
-      setWatchlist([
-        ...watchlist,
-        coin,
-      ]);
+      setWatchlist([...watchlist, coin]);
     }
   };
 
-  const removeFromWatchlist = (
-    id
-  ) => {
+  const removeFromWatchlist = (id) => {
     setWatchlist(
-      watchlist.filter(
-        (coin) => coin.id !== id
-      )
+      watchlist.filter((coin) => coin.id !== id)
     );
   };
 

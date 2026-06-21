@@ -24,3 +24,20 @@ body {
 
   font-family: Inter, sans-serif;
 }
+
+.status-message {
+  max-width: 700px;
+  margin: 0 auto 24px;
+  padding: 14px 18px;
+  border-radius: 10px;
+  text-align: center;
+  background: rgba(30, 41, 59, 0.8);
+  color: #cbd5e1;
+  border: 1px solid rgba(148, 163, 184, 0.2);
+}
+
+.status-error {
+  background: rgba(127, 29, 29, 0.35);
+  color: #fecaca;
+  border-color: rgba(248, 113, 113, 0.35);
+}

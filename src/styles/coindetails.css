@@ -166,3 +166,19 @@
     padding: 18px;
   }
 }
+
+.coin-status {
+  padding-top: 120px;
+  text-align: center;
+}
+
+.back-link {
+  display: inline-block;
+  margin-top: 16px;
+  color: #7dd3fc;
+  text-decoration: none;
+}
+
+.back-link:hover {
+  text-decoration: underline;
+}

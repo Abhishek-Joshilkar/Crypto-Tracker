@@ -1,21 +1,82 @@
-<<<<<<< HEAD
-# React + Vite
-
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
-
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
-
-## React Compiler
-
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
-=======
 # Crypto-Tracker
-A modern and responsive Crypto Tracker built with React JS, Vite, and Tailwind CSS that provides real-time cryptocurrency market data using the CoinGecko API. Users can search cryptocurrencies, view market statistics, and access detailed information for each coin through a clean and intuitive interface. 
->>>>>>> 8d28a3bf52702e187b84a8d298801578572b6cde
+
+A modern crypto tracker built with React, Vite, and Supabase Auth. Track live prices, search coins, save a watchlist, and view detailed charts — with secure login.
+
+## Roadmap (step by step)
+
+| Step | Feature | Status |
+|------|---------|--------|
+| 1 | Secure auth (Supabase JWT) | Done |
+| 2 | Demo buy & sell | Planned |
+| 3 | User data in Supabase + tracker highlights | Planned |
+| 4 | Full backend | Planned |
+| 5 | Innovative CSS polish | Planned |
+
+## Features
+
+- **Secure auth** — email/password sign up & sign in (JWT via Supabase)
+- Protected dashboard, watchlist, and coin details
+- Live market data from CoinGecko
+- Search, charts, per-user watchlist
+
+## Setup
+
+### 1. Install
+
+```bash
+npm install
+cp .env.example .env   # Windows: copy .env.example .env
+```
+
+### 2. CoinGecko API key
+
+Get a free Demo key at [coingecko.com/en/api](https://www.coingecko.com/en/api):
+
+```env
+VITE_COINGECKO_API_KEY=your_api_key_here
+VITE_COINGECKO_API_PLAN=demo
+```
+
+### 3. Supabase Auth (Step 1)
+
+1. Create a free project at [supabase.com](https://supabase.com)
+2. Go to **Project Settings → API**
+3. Copy **Project URL** and **anon public** key into `.env`:
+
+```env
+VITE_SUPABASE_URL=https://xxxxx.supabase.co
+VITE_SUPABASE_ANON_KEY=your_anon_key
+```
+
+4. In Supabase dashboard: **Authentication → Providers → Email** — keep Email enabled
+5. For local dev, you can disable **Confirm email** under **Authentication → Providers → Email** so sign-up works instantly without email verification
+
+Restart the dev server after editing `.env`:
+
+```bash
+npm run dev
+```
+
+## Auth routes
+
+| Route | Access |
+|-------|--------|
+| `/` | Public (home) |
+| `/login` | Guests only |
+| `/signup` | Guests only |
+| `/dashboard` | Signed in only |
+| `/watchlist` | Signed in only |
+| `/coin/:id` | Signed in only |
+
+## Scripts
+
+- `npm run dev` — start dev server
+- `npm run build` — production build
+- `npm run preview` — preview production build
+- `npm run lint` — run ESLint
+
+## Security notes
+
+- Never commit `.env` — it is gitignored
+- Only the Supabase **anon** key goes in the frontend; never expose the **service_role** key
+- Supabase handles JWT creation, refresh, and session storage securely

@@ -30,6 +30,27 @@ padding-top: 120px;
   line-height: 1.8;
 }
 
+.refresh-btn {
+  margin-top: 20px;
+  padding: 10px 20px;
+  border: 1px solid rgba(56, 189, 248, 0.4);
+  border-radius: 8px;
+  background: rgba(14, 165, 233, 0.15);
+  color: #7dd3fc;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.refresh-btn:hover:not(:disabled) {
+  background: rgba(14, 165, 233, 0.3);
+}
+
+.refresh-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
 @media (max-width: 768px) {
   .dashboard {
     padding: 20px;
