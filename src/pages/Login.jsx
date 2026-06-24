@@ -15,8 +15,7 @@ function Login() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const redirectTo =
-    location.state?.from || "/dashboard";
+  const redirectTo = location.state?.from || "/dashboard";
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -43,22 +42,17 @@ function Login() {
 
         <h1>Welcome back</h1>
         <p className="auth-subtitle">
-          Sign in to access your crypto dashboard,
-          watchlist, and portfolio tools.
+          Sign in to access your crypto dashboard, watchlist,
+          and portfolio tools.
         </p>
 
-        <form
-          className="auth-form"
-          onSubmit={handleSubmit}
-        >
+        <form className="auth-form" onSubmit={handleSubmit}>
           <label>
             Email
             <input
               type="email"
               value={email}
-              onChange={(e) =>
-                setEmail(e.target.value)
-              }
+              onChange={(e) => setEmail(e.target.value)}
               placeholder="you@example.com"
               required
               autoComplete="email"
@@ -70,9 +64,7 @@ function Login() {
             <input
               type="password"
               value={password}
-              onChange={(e) =>
-                setPassword(e.target.value)
-              }
+              onChange={(e) => setPassword(e.target.value)}
               placeholder="••••••••"
               required
               autoComplete="current-password"
@@ -80,24 +72,19 @@ function Login() {
             />
           </label>
 
-          {error && (
-            <p className="auth-error">{error}</p>
-          )}
+          {error && <p className="auth-error">{error}</p>}
 
           <button
             type="submit"
             className="auth-submit"
             disabled={loading}
           >
-            {loading
-              ? "Signing in..."
-              : "Sign in securely"}
+            {loading ? "Signing in..." : "Sign in securely"}
           </button>
         </form>
 
         <p className="auth-footer">
-          No account?{" "}
-          <Link to="/signup">Create one</Link>
+          No account? <Link to="/signup">Create one</Link>
         </p>
 
         <Link to="/" className="auth-back">

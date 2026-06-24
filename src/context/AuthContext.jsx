@@ -7,9 +7,13 @@ import {
 } from "react";
 
 import {
-  isSupabaseConfigured,
-  supabase,
-} from "../lib/supabase";
+  createUserWithEmailAndPassword,
+  onAuthStateChanged,
+  signInWithEmailAndPassword,
+  signOut as firebaseSignOut,
+} from "firebase/auth";
+
+import { auth, isFirebaseConfigured } from "../lib/firebase";
 
 const AuthContext = createContext(null);
 
@@ -19,55 +23,28 @@ export function AuthProvider({ children }) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (!isSupabaseConfigured()) {
+    if (!isFirebaseConfigured()) {
       setLoading(false);
       return;
     }
 
-    supabase.auth.getSession().then(({ data }) => {
-      setSession(data.session);
-      setUser(data.session?.user ?? null);
+    const unsubscribe = onAuthStateChanged(auth, (nextUser) => {
+      setUser(nextUser);
+      setSession(nextUser);
       setLoading(false);
     });
 
-    const {
-      data: { subscription },
-    } = supabase.auth.onAuthStateChange(
-      (_event, nextSession) => {
-        setSession(nextSession);
-        setUser(nextSession?.user ?? null);
-        setLoading(false);
-      }
-    );
-
-    return () => subscription.unsubscribe();
+    return unsubscribe;
   }, []);
 
-  const signUp = async (email, password) => {
-    const { data, error } =
-      await supabase.auth.signUp({
-        email,
-        password,
-      });
+  const signUp = async (email, password) =>
+    createUserWithEmailAndPassword(auth, email, password);
 
-    if (error) throw error;
-    return data;
-  };
-
-  const signIn = async (email, password) => {
-    const { data, error } =
-      await supabase.auth.signInWithPassword({
-        email,
-        password,
-      });
-
-    if (error) throw error;
-    return data;
-  };
+  const signIn = async (email, password) =>
+    signInWithEmailAndPassword(auth, email, password);
 
   const signOut = async () => {
-    const { error } = await supabase.auth.signOut();
-    if (error) throw error;
+    await firebaseSignOut(auth);
   };
 
   const value = useMemo(
@@ -75,7 +52,7 @@ export function AuthProvider({ children }) {
       user,
       session,
       loading,
-      isConfigured: isSupabaseConfigured(),
+      isConfigured: isFirebaseConfigured(),
       signUp,
       signIn,
       signOut,
@@ -94,9 +71,7 @@ export const useAuth = () => {
   const context = useContext(AuthContext);
 
   if (!context) {
-    throw new Error(
-      "useAuth must be used inside AuthProvider"
-    );
+    throw new Error("useAuth must be used inside AuthProvider");
   }
 
   return context;

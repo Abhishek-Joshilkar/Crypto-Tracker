@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 
 import { motion } from "framer-motion";
@@ -19,8 +19,14 @@ function CoinDetails() {
   const [coin, setCoin] = useState(null);
   const [history, setHistory] = useState([]);
   const [days, setDays] = useState(7);
+  const [chartRange, setChartRange] = useState(null);
+  const [chartMode, setChartMode] = useState("area");
+  const [drawMode, setDrawMode] = useState(false);
+  const [annotations, setAnnotations] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+
+  const annotationDraftRef = useRef(null);
 
   useEffect(() => {
     const fetchCoin = async () => {
@@ -45,16 +51,20 @@ function CoinDetails() {
     const fetchHistory = async () => {
       try {
         const data = await getCoinHistory(id, days);
-
         const chartData = data.prices.map((item) => ({
           date: new Date(item[0]).toLocaleDateString("en-US", {
             month: "short",
             day: "numeric",
           }),
+          volume:
+            data.total_volumes?.find((volumeItem) => volumeItem[0] === item[0])?.[1] ?? 0,
           price: item[1],
         }));
 
         setHistory(chartData);
+        setChartRange(null);
+        setAnnotations([]);
+        annotationDraftRef.current = null;
       } catch (err) {
         setHistory([]);
         setError((prev) => prev ?? err.message);
@@ -63,6 +73,39 @@ function CoinDetails() {
 
     if (id) fetchHistory();
   }, [id, days]);
+
+  const handleChartPoint = (point) => {
+    if (!drawMode || !point) return;
+
+    if (!annotationDraftRef.current) {
+      annotationDraftRef.current = point;
+      return;
+    }
+
+    const start = annotationDraftRef.current;
+    const end = point;
+
+    setAnnotations((current) => [
+      ...current,
+      {
+        id: `${start.index}-${end.index}-${Date.now()}`,
+        x1: start.x,
+        y1: start.y,
+        x2: end.x,
+        y2: end.y,
+        label: start.price <= end.price ? "Trend up" : "Trend down",
+      },
+    ]);
+
+    annotationDraftRef.current = null;
+    setDrawMode(false);
+  };
+
+  const clearAnnotations = () => {
+    setAnnotations([]);
+    annotationDraftRef.current = null;
+    setDrawMode(false);
+  };
 
   if (loading) {
     return (
@@ -90,6 +133,15 @@ function CoinDetails() {
   }
 
   const description = coin.description?.en ?? "";
+  const currentPrice = coin.market_data.current_price.usd;
+  const high24 = coin.market_data.high_24h.usd;
+  const low24 = coin.market_data.low_24h.usd;
+  const change24 = coin.market_data.price_change_percentage_24h;
+  const markers = [
+    { label: "24H High", value: high24, color: "#22c55e" },
+    { label: "24H Low", value: low24, color: "#f97316" },
+    { label: "Current", value: currentPrice, color: "#60a5fa" },
+  ];
 
   return (
     <>
@@ -110,17 +162,54 @@ function CoinDetails() {
 
           <p>
             Price: $
-            {coin.market_data.current_price.usd.toLocaleString()}
+            {currentPrice.toLocaleString()}
           </p>
         </div>
 
+        <div className="coin-chart-toolbar">
+          <div className="chart-toolbar-group">
+            <button
+              className={chartMode === "area" ? "chart-pill active" : "chart-pill"}
+              onClick={() => setChartMode("area")}
+              type="button"
+            >
+              Area
+            </button>
+            <button
+              className={chartMode === "line" ? "chart-pill active" : "chart-pill"}
+              onClick={() => setChartMode("line")}
+              type="button"
+            >
+              Line
+            </button>
+            <button
+              className={drawMode ? "chart-pill active" : "chart-pill"}
+              onClick={() => setDrawMode((value) => !value)}
+              type="button"
+            >
+              Draw line
+            </button>
+            <button className="chart-pill" onClick={clearAnnotations} type="button">
+              Clear drawings
+            </button>
+          </div>
+
+          <div className="chart-toolbar-group">
+            <button className={days === 1 ? "chart-pill active" : "chart-pill"} onClick={() => setDays(1)} type="button">1D</button>
+            <button className={days === 7 ? "chart-pill active" : "chart-pill"} onClick={() => setDays(7)} type="button">7D</button>
+            <button className={days === 30 ? "chart-pill active" : "chart-pill"} onClick={() => setDays(30)} type="button">30D</button>
+            <button className={days === 90 ? "chart-pill active" : "chart-pill"} onClick={() => setDays(90)} type="button">90D</button>
+            <button className={days === 365 ? "chart-pill active" : "chart-pill"} onClick={() => setDays(365)} type="button">1Y</button>
+          </div>
+        </div>
+
         <div className="coin-stats">
-          <div className="stat-box">
+          <div className="stat-box stat-box--rank">
             <h4>Rank</h4>
             <p>#{coin.market_cap_rank}</p>
           </div>
 
-          <div className="stat-box">
+          <div className="stat-box stat-box--accent">
             <h4>Market Cap</h4>
             <p>
               $
@@ -128,7 +217,7 @@ function CoinDetails() {
             </p>
           </div>
 
-          <div className="stat-box">
+          <div className="stat-box stat-box--positive">
             <h4>24H High</h4>
             <p>
               $
@@ -136,7 +225,7 @@ function CoinDetails() {
             </p>
           </div>
 
-          <div className="stat-box">
+          <div className="stat-box stat-box--warning">
             <h4>24H Low</h4>
             <p>
               $
@@ -144,21 +233,21 @@ function CoinDetails() {
             </p>
           </div>
 
-          <div className="stat-box">
+          <div className="stat-box stat-box--change">
             <h4>24H Change</h4>
-            <p>
-              {coin.market_data.price_change_percentage_24h.toFixed(2)}%
+            <p className={change24 >= 0 ? "positive" : "negative"}>
+              {change24.toFixed(2)}%
             </p>
           </div>
 
-          <div className="stat-box">
+          <div className="stat-box stat-box--soft">
             <h4>Circulating Supply</h4>
             <p>
               {coin.market_data.circulating_supply.toLocaleString()}
             </p>
           </div>
 
-          <div className="stat-box">
+          <div className="stat-box stat-box--volume">
             <h4>Volume</h4>
             <p>
               $
@@ -166,19 +255,28 @@ function CoinDetails() {
             </p>
           </div>
 
-          <div className="stat-box">
+          <div className="stat-box stat-box--ath">
             <h4>ATH</h4>
             <p>${coin.market_data.ath.usd.toLocaleString()}</p>
           </div>
         </div>
 
-        <div className="chart-buttons">
-          <button onClick={() => setDays(7)}>7D</button>
-          <button onClick={() => setDays(30)}>30D</button>
-          <button onClick={() => setDays(90)}>90D</button>
-        </div>
+        <PriceChart
+          data={history}
+          markers={markers}
+          activeRange={chartRange}
+          onRangeChange={setChartRange}
+          mode={chartMode}
+          drawMode={drawMode}
+          annotations={annotations}
+          onPointSelect={handleChartPoint}
+        />
 
-        <PriceChart data={history} />
+        {drawMode && (
+          <p className="status-message coin-draw-help">
+            Draw mode is on. Click two points on the chart to place a trend line.
+          </p>
+        )}
 
         {description && (
           <div className="coin-description">

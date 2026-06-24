@@ -20,14 +20,18 @@ function AuthSetupNotice() {
     <div className="auth-page">
       <div className="auth-card auth-setup-card">
         <span className="auth-badge">Step 1 · Auth</span>
-        <h1>Supabase not configured</h1>
+        <h1>Firebase not configured</h1>
         <p>
-          Add your Supabase project URL and anon key to{" "}
+          Add your Firebase web app settings to{" "}
           <code>.env</code>, then restart the dev server.
         </p>
         <pre className="auth-code">
-{`VITE_SUPABASE_URL=https://xxx.supabase.co
-VITE_SUPABASE_ANON_KEY=your_anon_key`}
+{`VITE_FIREBASE_API_KEY=your_api_key
+VITE_FIREBASE_AUTH_DOMAIN=your-project.firebaseapp.com
+VITE_FIREBASE_PROJECT_ID=your_project_id
+VITE_FIREBASE_STORAGE_BUCKET=your_project_id.appspot.com
+VITE_FIREBASE_MESSAGING_SENDER_ID=your_sender_id
+VITE_FIREBASE_APP_ID=your_app_id`}
         </pre>
       </div>
     </div>
@@ -71,9 +75,7 @@ export function GuestRoute({ children }) {
   }
 
   if (user) {
-    return (
-      <Navigate to="/dashboard" replace />
-    );
+    return <Navigate to="/dashboard" replace />;
   }
 
   return children;

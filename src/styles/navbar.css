@@ -23,12 +23,28 @@
 }
 
 .nav-logo {
-  color: white;
+  color: transparent;
   font-size: 1.7rem;
   font-weight: 700;
   text-decoration: none;
-
   letter-spacing: 1px;
+  background: linear-gradient(
+    90deg,
+    #f8fafc 0%,
+    #38bdf8 18%,
+    #a855f7 40%,
+    #ec4899 60%,
+    #60a5fa 78%,
+    #f8fafc 100%
+  );
+  background-size: 220% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  text-shadow:
+    0 0 1px rgba(255, 255, 255, 0.3),
+    0 0 10px rgba(56, 189, 248, 0.16),
+    0 0 18px rgba(168, 85, 247, 0.12);
+  animation: brandGlow 5.5s ease-in-out infinite;
 }
 
 .nav-links {
@@ -125,5 +141,31 @@
 
   .nav-home-btn {
     padding: 8px 14px;
+  }
+}
+
+@keyframes brandGlow {
+  0%,
+  100% {
+    background-position: 0% 50%;
+    filter: hue-rotate(0deg);
+    text-shadow:
+      0 0 1px rgba(255, 255, 255, 0.3),
+      0 0 10px rgba(56, 189, 248, 0.16),
+      0 0 18px rgba(168, 85, 247, 0.12);
+  }
+  50% {
+    background-position: 100% 50%;
+    filter: hue-rotate(14deg);
+    text-shadow:
+      0 0 1px rgba(255, 255, 255, 0.42),
+      0 0 14px rgba(45, 212, 191, 0.2),
+      0 0 24px rgba(236, 72, 153, 0.16);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nav-logo {
+    animation: none;
   }
 }

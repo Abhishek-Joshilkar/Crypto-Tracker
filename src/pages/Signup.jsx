@@ -28,9 +28,7 @@ function Signup() {
     }
 
     if (password.length < 6) {
-      setError(
-        "Password must be at least 6 characters."
-      );
+      setError("Password must be at least 6 characters.");
       return;
     }
 
@@ -64,22 +62,16 @@ function Signup() {
 
         <h1>Join CryptoTracker</h1>
         <p className="auth-subtitle">
-          Create a secure account. Your session uses
-          JWT tokens managed by Supabase.
+          Create a secure account with Firebase Auth.
         </p>
 
-        <form
-          className="auth-form"
-          onSubmit={handleSubmit}
-        >
+        <form className="auth-form" onSubmit={handleSubmit}>
           <label>
             Email
             <input
               type="email"
               value={email}
-              onChange={(e) =>
-                setEmail(e.target.value)
-              }
+              onChange={(e) => setEmail(e.target.value)}
               placeholder="you@example.com"
               required
               autoComplete="email"
@@ -91,9 +83,7 @@ function Signup() {
             <input
               type="password"
               value={password}
-              onChange={(e) =>
-                setPassword(e.target.value)
-              }
+              onChange={(e) => setPassword(e.target.value)}
               placeholder="Min. 6 characters"
               required
               autoComplete="new-password"
@@ -116,9 +106,7 @@ function Signup() {
             />
           </label>
 
-          {error && (
-            <p className="auth-error">{error}</p>
-          )}
+          {error && <p className="auth-error">{error}</p>}
 
           {success && (
             <p className="auth-success">{success}</p>

@@ -1,66 +1,361 @@
 .dashboard {
   min-height: 100vh;
+  padding: 120px 24px 80px;
+  color: white;
+  max-width: 1440px;
+  margin: 0 auto;
+}
 
-  /* padding: 40px 40px 80px; */
-padding-top: 120px;
+.dashboard-hero {
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  gap: 20px;
+  margin-bottom: 22px;
+}
+
+.dashboard-kicker {
+  margin: 0 0 10px;
+  color: #7dd3fc;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-size: 0.8rem;
+}
+
+.dashboard-hero h1 {
+  margin: 0;
+  font-size: clamp(2.2rem, 4vw, 3.4rem);
+}
+
+.dashboard-subtitle {
+  max-width: 760px;
+  margin: 12px 0 0;
+  color: #94a3b8;
+  line-height: 1.7;
+}
+
+.dashboard-actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.dashboard-link-btn,
+.refresh-btn,
+.timeframe-btn {
+  min-height: 42px;
+  padding: 0 16px;
+  border-radius: 12px;
+  border: 1px solid rgba(56, 189, 248, 0.18);
+  background: rgba(14, 165, 233, 0.1);
+  color: #7dd3fc;
+  cursor: pointer;
+  transition: transform 0.18s ease, background 0.18s ease, border-color 0.18s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+}
+
+.dashboard-link-btn:hover,
+.refresh-btn:hover:not(:disabled),
+.timeframe-btn:hover {
+  transform: translateY(-1px);
+  background: rgba(14, 165, 233, 0.18);
+}
+
+.dashboard-panel {
+  background: rgba(17, 24, 39, 0.72);
+  border: 1px solid rgba(148, 163, 184, 0.12);
+  border-radius: 18px;
+  padding: 18px;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.16);
+}
+
+.market-tabs-panel {
+  margin-bottom: 18px;
+}
+
+.market-tabs {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.market-tab {
+  min-height: 40px;
+  padding: 0 14px;
+  border-radius: 999px;
+  border: 1px solid rgba(148, 163, 184, 0.14);
+  background: rgba(30, 41, 59, 0.68);
+  color: #cbd5e1;
+  cursor: pointer;
+}
+
+.market-tab.active {
+  background: linear-gradient(90deg, #3b82f6, #8b5cf6);
   color: white;
 }
 
-.dashboard-header {
-  text-align: center;
-
-  margin: 40px 0 50px;
+.dashboard-controls {
+  display: grid;
+  grid-template-columns: 1.2fr auto auto;
+  gap: 16px;
+  align-items: end;
+  margin-bottom: 18px;
 }
 
-.dashboard-header h1 {
-  font-size: 3rem;
-
-  margin-bottom: 15px;
+.coin-picker {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 }
 
-.dashboard-header p {
+.coin-picker label {
+  color: #cbd5e1;
+  font-size: 0.92rem;
+}
+
+.coin-picker select {
+  min-height: 44px;
+  border-radius: 12px;
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  background: rgba(30, 41, 59, 0.8);
+  color: white;
+  padding: 0 12px;
+}
+
+.timeframe-group,
+.chart-mode-group {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.timeframe-btn.active {
+  background: linear-gradient(90deg, #3b82f6, #8b5cf6);
+  color: white;
+}
+
+.selected-coin-summary {
+  margin-bottom: 18px;
+}
+
+.selected-coin-title {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 18px;
+}
+
+.selected-coin-title img {
+  width: 56px;
+  height: 56px;
+  object-fit: contain;
+}
+
+.selected-coin-title h2 {
+  margin: 0;
+  font-size: 1.6rem;
+}
+
+.selected-coin-title p {
+  margin: 4px 0 0;
   color: #94a3b8;
-
-  font-size: 1.1rem;
-
-  max-width: 700px;
-
-  margin: auto;
-
-  line-height: 1.8;
 }
 
-.refresh-btn {
-  margin-top: 20px;
-  padding: 10px 20px;
-  border: 1px solid rgba(56, 189, 248, 0.4);
-  border-radius: 8px;
-  background: rgba(14, 165, 233, 0.15);
-  color: #7dd3fc;
-  font-size: 0.95rem;
+.summary-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+  gap: 12px;
+}
+
+.summary-card {
+  border-radius: 14px;
+  padding: 14px;
+  background: rgba(30, 41, 59, 0.75);
+  border: 1px solid rgba(148, 163, 184, 0.12);
+}
+
+.summary-card span {
+  display: block;
+  color: #94a3b8;
+  font-size: 0.85rem;
+  margin-bottom: 8px;
+}
+
+.summary-card strong {
+  font-size: 1.08rem;
+}
+
+.market-list-panel {
+  margin-bottom: 18px;
+}
+
+.market-list {
+  display: grid;
+  gap: 8px;
+}
+
+.market-list-head,
+.market-row {
+  display: grid;
+  grid-template-columns: 60px 1.8fr 1fr 1fr 1fr 1fr;
+  gap: 12px;
+  align-items: center;
+}
+
+.market-list-head {
+  color: #94a3b8;
+  font-size: 0.85rem;
+  padding: 0 8px 8px;
+}
+
+.market-row {
+  width: 100%;
+  padding: 12px 8px;
+  border-radius: 14px;
+  border: 1px solid rgba(148, 163, 184, 0.08);
+  background: rgba(30, 41, 59, 0.5);
+  color: white;
+  text-align: left;
   cursor: pointer;
-  transition: background 0.2s ease;
 }
 
-.refresh-btn:hover:not(:disabled) {
-  background: rgba(14, 165, 233, 0.3);
+.market-row:hover,
+.market-row.active {
+  background: rgba(59, 130, 246, 0.12);
+  border-color: rgba(96, 165, 250, 0.28);
 }
 
-.refresh-btn:disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
+.market-coin-name {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+}
+
+.market-coin-name img {
+  width: 28px;
+  height: 28px;
+  object-fit: contain;
+}
+
+.market-coin-name strong {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.market-coin-name small {
+  color: #94a3b8;
+  font-size: 0.78rem;
+}
+
+.positive {
+  color: #22c55e;
+}
+
+.negative {
+  color: #ef4444;
+}
+
+.chart-panel {
+  margin-bottom: 18px;
+}
+
+.panel-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.panel-heading h2 {
+  margin: 0;
+  font-size: 1.15rem;
+}
+
+.panel-heading p {
+  margin: 4px 0 0;
+  color: #94a3b8;
+  font-size: 0.92rem;
+}
+
+.chart-status {
+  color: #7dd3fc;
+  font-size: 0.9rem;
+}
+
+.dashboard-split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+  align-items: start;
+}
+
+.dashboard-coinlist {
+  width: 100%;
+  overflow: hidden;
+}
+
+.dashboard-coinlist .coin-grid {
+  max-width: none;
+  margin: 18px 0 0;
+  padding: 0;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+}
+
+.status-message {
+  color: #94a3b8;
+  margin: 12px 0;
+}
+
+.status-error {
+  color: #fca5a5;
+}
+
+@media (max-width: 1080px) {
+  .dashboard-controls,
+  .dashboard-split {
+    grid-template-columns: 1fr;
+  }
+
+  .dashboard-hero {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .market-list-head {
+    display: none;
+  }
+
+  .market-row {
+    grid-template-columns: 1fr 1fr;
+    gap: 8px 12px;
+  }
+
+  .dashboard-coinlist .coin-grid {
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  }
 }
 
 @media (max-width: 768px) {
   .dashboard {
-    padding: 20px;
+    padding: 110px 16px 64px;
   }
 
-  .dashboard-header h1 {
-    font-size: 2.2rem;
+  .panel-heading,
+  .dashboard-hero {
+    align-items: flex-start;
   }
 
-  .dashboard-header p {
-    font-size: 1rem;
+  .market-row {
+    grid-template-columns: 1fr;
+  }
+
+  .dashboard-coinlist .coin-grid {
+    grid-template-columns: 1fr;
   }
 }
