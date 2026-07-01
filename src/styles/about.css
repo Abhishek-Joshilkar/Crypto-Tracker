@@ -1,69 +1,274 @@
-.about {
-  padding: 140px 20px;
+/* =========================
+   ABOUT SECTION
+========================= */
 
+.about {
   position: relative;
+
+  padding: 140px 24px;
+
+  overflow: hidden;
 }
 
-.about::before {
+/* BACKGROUND GLOW */
+
+.about::before,
+.about::after {
   content: "";
 
   position: absolute;
 
-  width: 500px;
-  height: 500px;
-
-  background: rgba(
-    59,
-    130,
-    246,
-    0.12
-  );
+  border-radius: 50%;
 
   filter: blur(140px);
 
-  left: -200px;
-  top: 50px;
+  z-index: 0;
 }
 
-.about-content {
-  max-width: 900px;
+.about::before {
+  width: 420px;
+  height: 420px;
+
+  background: rgba(59, 130, 246, 0.18);
+
+  top: 0;
+  left: -150px;
+}
+
+.about::after {
+  width: 380px;
+  height: 380px;
+
+  background: rgba(139, 92, 246, 0.18);
+
+  bottom: 0;
+  right: -120px;
+}
+
+/* =========================
+   CONTAINER
+========================= */
+
+.about-container {
+  position: relative;
+
+  z-index: 1;
+
+  max-width: 1300px;
 
   margin: auto;
 
-  text-align: center;
+  display: grid;
 
-  background: rgba(
-    30,
-    41,
-    59,
-    0.45
-  );
+  grid-template-columns:
+    minmax(0, 1.1fr)
+    minmax(0, 1fr);
+
+  gap: 50px;
+
+  align-items: center;
+}
+
+/* =========================
+   LEFT CONTENT
+========================= */
+
+.about-content {
+  background: rgba(15, 23, 42, 0.7);
+
+  border: 1px solid rgba(255, 255, 255, 0.08);
 
   backdrop-filter: blur(20px);
 
-  border: 1px solid rgba(
-    255,
-    255,
-    255,
-    0.08
-  );
+  border-radius: 30px;
 
-  border-radius: 24px;
+  padding: 50px;
+}
 
-  padding: 60px;
+.about-tag {
+  display: inline-block;
+
+  margin-bottom: 18px;
+
+  color: #7dd3fc;
+
+  font-size: 0.8rem;
+
+  letter-spacing: 0.16em;
+
+  font-weight: 700;
+
+  text-transform: uppercase;
 }
 
 .about-content h2 {
-  font-size: 3rem;
-  margin-bottom: 25px;
+  margin: 0 0 24px;
+
+  font-size: clamp(2.2rem, 4vw, 4rem);
+
+  line-height: 1.15;
+
+  color: white;
 }
 
-.about-content p {
+.about-description {
   color: #94a3b8;
 
-  font-size: 1.1rem;
+  font-size: 1.05rem;
 
-  line-height: 2;
+  line-height: 1.9;
 
   margin-bottom: 20px;
+}
+
+/* =========================
+   STATS
+========================= */
+
+.about-stats {
+  display: grid;
+
+  grid-template-columns:
+    repeat(3, 1fr);
+
+  gap: 18px;
+
+  margin-top: 40px;
+}
+
+.stat-box {
+  padding: 24px 18px;
+
+  border-radius: 20px;
+
+  background: rgba(30, 41, 59, 0.7);
+
+  border: 1px solid rgba(148, 163, 184, 0.1);
+
+  text-align: center;
+}
+
+.stat-box h3 {
+  margin: 0 0 10px;
+
+  font-size: 2rem;
+
+  color: #60a5fa;
+}
+
+.stat-box span {
+  color: #cbd5e1;
+
+  font-size: 0.95rem;
+}
+
+/* =========================
+   FEATURES
+========================= */
+
+.about-features {
+  display: grid;
+
+  grid-template-columns:
+    repeat(2, minmax(0, 1fr));
+
+  gap: 22px;
+}
+
+.feature-card {
+  padding: 30px 24px;
+
+  border-radius: 24px;
+
+  background: rgba(15, 23, 42, 0.72);
+
+  border: 1px solid rgba(148, 163, 184, 0.08);
+
+  backdrop-filter: blur(18px);
+
+  transition:
+    transform 0.3s ease,
+    border-color 0.3s ease,
+    background 0.3s ease;
+}
+
+.feature-card:hover {
+  transform: translateY(-6px);
+
+  border-color: rgba(96, 165, 250, 0.3);
+
+  background: rgba(30, 41, 59, 0.82);
+}
+
+.feature-icon {
+  font-size: 2rem;
+
+  margin-bottom: 20px;
+
+  color: #60a5fa;
+}
+
+.feature-card h3 {
+  margin: 0 0 14px;
+
+  color: white;
+
+  font-size: 1.2rem;
+}
+
+.feature-card p {
+  color: #94a3b8;
+
+  line-height: 1.7;
+
+  font-size: 0.96rem;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media (max-width: 1100px) {
+  .about-container {
+    grid-template-columns: 1fr;
+  }
+
+  .about-features {
+    grid-template-columns: repeat(
+      auto-fit,
+      minmax(240px, 1fr)
+    );
+  }
+}
+
+@media (max-width: 768px) {
+  .about {
+    padding: 100px 18px;
+  }
+
+  .about-content {
+    padding: 36px 28px;
+  }
+
+  .about-stats {
+    grid-template-columns: 1fr;
+  }
+
+  .about-features {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 540px) {
+  .about-content h2 {
+    font-size: 2rem;
+  }
+
+  .about-description {
+    font-size: 0.98rem;
+  }
+
+  .feature-card {
+    padding: 24px 20px;
+  }
 }

@@ -1,38 +1,97 @@
-.top-movers {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 20px;
-  margin: 30px 0;
-}
+/* =========================
+   MOVER COIN INFO (left side)
+========================= */
 
-.mover-card {
-  background: rgba(30, 41, 59, 0.6);
-  backdrop-filter: blur(15px);
-  border: 1px solid rgba(255,255,255,0.1);
-  border-radius: 16px;
-  padding: 20px;
-}
-
-.mover-card h2 {
-  margin-bottom: 15px;
-}
-
-.mover-item {
+.mover-coin-info {
   display: flex;
-  justify-content: space-between;
-  padding: 10px 0;
+  align-items: center;
+  gap: 10px;
+  flex: 1;
+  min-width: 0;
 }
 
-.positive {
+.mover-coin-img {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  object-fit: contain;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.mover-coin-text {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  gap: 2px;
+}
+
+.mover-coin-symbol {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: #f8fafc;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 1.3;
+}
+
+.mover-coin-name {
+  font-size: 0.72rem;
+  color: #64748b;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 1.3;
+}
+
+/* =========================
+   PERCENTAGE BADGE
+========================= */
+
+.mover-pct {
+  flex-shrink: 0;
+  font-size: 0.88rem;
+  font-weight: 700;
+  white-space: nowrap;
+  padding: 4px 10px;
+  border-radius: 8px;
+}
+
+.mover-pct.positive {
+  background: rgba(34, 197, 94, 0.12);
   color: #22c55e;
 }
 
-.negative {
+.mover-pct.negative {
+  background: rgba(239, 68, 68, 0.12);
   color: #ef4444;
 }
 
-@media (max-width: 768px) {
-  .top-movers {
-    grid-template-columns: 1fr;
+/* =========================
+   DIVIDER BETWEEN ROWS
+========================= */
+
+.mover-item {
+  border-bottom: 1px solid rgba(148, 163, 184, 0.07);
+}
+
+.mover-item:last-child {
+  border-bottom: none;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media (max-width: 420px) {
+  .mover-coin-img {
+    width: 26px;
+    height: 26px;
+  }
+
+  .mover-pct {
+    padding: 3px 8px;
+    font-size: 0.82rem;
   }
 }

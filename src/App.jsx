@@ -6,6 +6,7 @@ import CoinDetails from "./pages/CoinDetails";
 import Watchlist from "./pages/Watchlist";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
+import Portfolio from "./pages/Portfolio";
 
 import ProtectedRoute, {
   GuestRoute,
@@ -41,6 +42,11 @@ function App() {
             <Watchlist />
           </ProtectedRoute>
         }
+      />
+
+      <Route
+        path="/portfolio"
+        element={<Portfolio />}
       />
 
       <Route

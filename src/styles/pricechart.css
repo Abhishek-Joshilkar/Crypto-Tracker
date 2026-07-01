@@ -1,11 +1,25 @@
 .chart-container {
   width: 100%;
-  min-height: 520px;
   height: 520px;
-  background: rgba(15, 23, 42, 0.78);
-  border: 1px solid rgba(148, 163, 184, 0.12);
-  border-radius: 18px;
-  padding: 12px 8px 12px 0;
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(15, 23, 42, 0.96),
+      rgba(30, 41, 59, 0.92)
+    );
+
+  border-radius: 24px;
+
+  padding: 20px;
+
+  border:
+    1px solid rgba(148, 163, 184, 0.12);
+
+  box-shadow:
+    0 0 30px rgba(59, 130, 246, 0.08);
+
+  position: relative;
 }
 
 .chart-tooltip {
